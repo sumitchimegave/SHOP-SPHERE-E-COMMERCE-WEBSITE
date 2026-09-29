@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} - ShopSphere{% endblock %}
+{% block content %}
+<article class="article">
+    <span>{{ post.created_at }} · By {{ post.author }}</span>
+    <h1>{{ post.title }}</h1>
+    {% for paragraph in post.content.split('. ') %}
+        <p>{{ paragraph }}{% if not paragraph.endswith('.') %}.{% endif %}</p>
+    {% endfor %}
+    <a class="btn" href="{{ url_for('blog') }}">← Back to Blog</a>
+</article>
+{% endblock %}

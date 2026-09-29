@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Order Placed - ShopSphere{% endblock %}
+{% block content %}
+<div class="success">
+    <div class="success-icon">✓</div>
+    <h1>Order Placed Successfully!</h1>
+    <p>Thank you, {{ name }}. Your order total is ₹{{ "%.2f"|format(total) }}.</p>
+    <a class="btn" href="{{ url_for('products') }}">Continue Shopping</a>
+</div>
+{% endblock %}

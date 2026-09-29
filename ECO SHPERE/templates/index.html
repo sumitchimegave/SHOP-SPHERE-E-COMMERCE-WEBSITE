@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}ShopSphere - Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="tag">SMART SHOPPING STARTS HERE</p>
+        <h1>Everything you need,<br><span>in one place.</span></h1>
+        <p>Discover useful products at simple prices and learn smart shopping tips through our blog.</p>
+        <a class="btn" href="{{ url_for('products') }}">Shop Now</a>
+        <a class="btn secondary" href="{{ url_for('blog') }}">Read Blog</a>
+    </div>
+    <div class="hero-card">🛍️<br><small>Shop • Learn • Enjoy</small></div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <h2>Featured Products</h2>
+        <a href="{{ url_for('products') }}">View all →</a>
+    </div>
+    <div class="grid">
+        {% for p in products[:6] %}
+        <article class="card">
+            <img src="{{ p.image }}" alt="{{ p.name }}">
+            <div class="card-body">
+                <small>{{ p.category }}</small>
+                <h3>{{ p.name }}</h3>
+                <p>{{ p.description }}</p>
+                <strong>₹{{ "%.2f"|format(p.price) }}</strong>
+                <div class="actions">
+                    <a class="outline" href="{{ url_for('product', product_id=p.id) }}">Details</a>
+                    <form method="POST" action="{{ url_for('add_to_cart', product_id=p.id) }}">
+                        <button class="btn small">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="blog-preview">
+    <div class="section-head"><h2>Latest from our Blog</h2><a href="{{ url_for('blog') }}">All posts →</a></div>
+    <div class="blog-grid">
+    {% for post in posts %}
+        <article class="blog-card">
+            <span>{{ post.created_at }}</span>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content[:150] }}...</p>
+            <a href="{{ url_for('blog_post', post_id=post.id) }}">Read More →</a>
+        </article>
+    {% endfor %}
+    </div>
+</section>
+{% endblock %}

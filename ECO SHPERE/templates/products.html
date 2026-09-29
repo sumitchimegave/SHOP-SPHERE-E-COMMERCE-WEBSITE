@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Products - ShopSphere{% endblock %}
+{% block content %}
+<section class="page-head">
+    <p class="tag">OUR STORE</p>
+    <h1>Products</h1>
+    <p>Choose from our collection.</p>
+</section>
+<div class="categories">
+    <a href="{{ url_for('products') }}">All</a>
+    <a href="{{ url_for('products', category='Electronics') }}">Electronics</a>
+    <a href="{{ url_for('products', category='Fashion') }}">Fashion</a>
+    <a href="{{ url_for('products', category='Accessories') }}">Accessories</a>
+    <a href="{{ url_for('products', category='Home') }}">Home</a>
+</div>
+<section class="grid">
+{% for p in products %}
+<article class="card">
+    <img src="{{ p.image }}" alt="{{ p.name }}">
+    <div class="card-body">
+        <small>{{ p.category }}</small>
+        <h3>{{ p.name }}</h3>
+        <p>{{ p.description }}</p>
+        <strong>₹{{ "%.2f"|format(p.price) }}</strong>
+        <div class="actions">
+            <a class="outline" href="{{ url_for('product', product_id=p.id) }}">Details</a>
+            <form method="POST" action="{{ url_for('add_to_cart', product_id=p.id) }}">
+                <button class="btn small">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</article>
+{% else %}
+<p>No products found.</p>
+{% endfor %}
+</section>
+{% endblock %}
